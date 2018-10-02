@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Книжный магазин";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Книжный магазин</title>
+</head>
+<body>
+    <div>
+        <h3>Распродажа книг</h3>
+        <table>
+            <tr>
+                <td><p>Название книги</p></td>
+                <td><p>Автор</p></td>
+                <td><p>Цена</p></td>
+                <td></td>
+            </tr>
+            @foreach (var b in ViewBag.Books)
+            {
+                <tr>
+                    <td><p>@b.Name</p></td>
+                    <td><p>@b.Author</p></td>
+                    <td><p>@b.Price</p></td>
+                    <td><p><a href="/Home/Buy/@b.Id">Купить</a></p></td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    @Html.Action("GetList")
+
+    @using (Html.BeginForm("GetForm", "Home", FormMethod.Post))
+    {
+        @Html.TextArea("text", "Привет,мир", 5, 50, null)
+        <input type="submit" value="send" />
+    }
+
+    @using (Html.BeginForm("GetSurvey", "Home", FormMethod.Post))
+    {
+        <h3>Выберите лучшую книгу</h3>
+        foreach (var b in ViewBag.Books)
+        {
+
+            string bookname = Convert.ToString(@b.Name);
+            <div>
+                @Html.RadioButton("Vote", bookname)<span>@b.Name, @b.Author</span>
+            </div>
+        }
+        <input type="submit" value="send" />
+    }
+
+
+    @*@Html.Partial("GetList", new string[] { "Russia", "USA", "Canada", "France" })*@
+
+</body>
+</html>
